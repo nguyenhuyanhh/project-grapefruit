@@ -2,11 +2,11 @@
 
 from unittest import TestCase, main
 
-from challenge import Desert
+from challenge import Desert, State
 
 
 class TestDesert(TestCase):
-    """Testing for class Desert."""
+    """Test cases for class Desert."""
 
     def setUp(self):
         self.desert = Desert(n_target=5)
@@ -54,6 +54,22 @@ class TestDesert(TestCase):
         self.assertEqual(result.truck_pos, 1)
         self.assertEqual(result.truck_fuel, 0)
         self.assertEqual(result.desert_fuel[1], 2)
+
+
+class TestState(TestCase):
+    """Test cases for class State."""
+
+    def setUp(self):
+        self.desert = Desert(5)
+        self.state = State(self.desert)
+
+    def test_next_states_initial(self):
+        """Test the next states after the initial state."""
+        right, left, load, drop = self.state.next_states()
+        self.assertEqual(right.desert, self.desert)
+        self.assertEqual(left.desert, self.desert)
+        self.assertEqual(load.desert.truck_fuel, 3)
+        self.assertEqual(drop.desert, self.desert)
 
 
 if __name__ == '__main__':
