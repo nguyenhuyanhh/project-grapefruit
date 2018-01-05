@@ -63,20 +63,9 @@ class Desert:
         """Load the truck with 1 unit of fuel at any other position."""
         values = self.values[:]
         cur_pos = values[-1] - 1
-        if cur_pos >= 0 and values[-2] + 1 <= MAX_FUEL and values[cur_pos] >= 1:
+        if cur_pos >= 0 and values[-2] + 1 <= MAX_FUEL and MAX_FUEL >= values[cur_pos] >= 1:
             values[cur_pos] -= 1
             values[-2] += 1
-        else:
-            return None
-        return Desert(values)
-
-    def load_fuel_2(self):
-        """Load the truck with 2 units of fuel at any other position."""
-        values = self.values[:]
-        cur_pos = values[-1] - 1
-        if cur_pos >= 0 and values[-2] + 2 <= MAX_FUEL and values[cur_pos] >= 2:
-            values[cur_pos] -= 2
-            values[-2] += 2
         else:
             return None
         return Desert(values)
