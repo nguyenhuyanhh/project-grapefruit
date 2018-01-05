@@ -23,17 +23,12 @@ class Desert:
         return self.values == other.values
 
     def __str__(self):
-        _str = ','.join([str(i) for i in self.values])
-        return _str
-
-    def __hash__(self):
-        return hash(str(self))
-
-    def pretty_print(self):
-        """Pretty-printed representation of the desert."""
         str_ = 'Fuel at stations: {}\nTruck at position {} with {} fuel'.format(
             self.values[:-2], self.values[-1], self.values[-2])
         return str_
+
+    def __hash__(self):
+        return hash(tuple(self.values))
 
     def move_right(self):
         """Move the truck right, by one unit."""
@@ -162,4 +157,4 @@ if __name__ == '__main__':
 
     elif len(sys.argv) == 3:
         init_values = [0 for i in range(int(sys.argv[1]))] + [0, 0]
-        print(interactive(Desert(init_values), sys.argv[2]).pretty_print())
+        print(interactive(Desert(init_values), sys.argv[2]))
