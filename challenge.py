@@ -169,7 +169,7 @@ def bfs(target):
         explored.add(cur_state)
         for key, next_state in cur_state.next_states().items():
             cur_path = cur_pos.path
-            if next_state not in explored and next_state not in [x.cur_state for x in queue]:
+            if next_state != cur_state and next_state not in explored and next_state not in [x.cur_state for x in queue]:
                 queue.append(search_pos(
                     next_state, cur_state, cur_path + key))
 
