@@ -29,6 +29,12 @@ class Desert:
     def __hash__(self):
         return hash(str(self))
 
+    def pretty_print(self):
+        """Pretty-printed representation of the desert."""
+        str_ = 'Fuel at stations: {}\nTruck at position {} with {} fuel'.format(
+            self.values[:n_target], self.values[-1], self.values[-2])
+        return str_
+
     def move_right(self):
         """Move the truck right, by one unit."""
         values = self.values[:]
@@ -94,6 +100,10 @@ class State:
 
     def __hash__(self):
         return hash(str(self))
+
+    def pretty_print(self):
+        """Pretty-printed representation of the state."""
+        return self.desert.pretty_print()
 
     def move_right(self):
         """Move the truck right, by one unit."""
@@ -173,7 +183,7 @@ def interactive(init_state, sequence):
         move = queue.popleft()
         state = state.next_states()[move]
 
-    print(state)
+    return state
 
 
 if __name__ == '__main__':
@@ -188,4 +198,4 @@ if __name__ == '__main__':
         n_target = int(sys.argv[1])
         seq = sys.argv[2]
         init_values = [0 for i in range(n_target)] + [0, 0]
-        interactive(State(init_values), seq)
+        print(interactive(State(init_values), seq).pretty_print())
