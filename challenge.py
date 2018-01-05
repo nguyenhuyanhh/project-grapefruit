@@ -32,7 +32,7 @@ class Desert:
     def pretty_print(self):
         """Pretty-printed representation of the desert."""
         str_ = 'Fuel at stations: {}\nTruck at position {} with {} fuel'.format(
-            self.values[:n_target], self.values[-1], self.values[-2])
+            self.values[:-2], self.values[-1], self.values[-2])
         return str_
 
     def move_right(self):
@@ -145,17 +145,17 @@ class State:
         return result
 
 
-def bfs(n_target):
+def bfs(target):
     """Use BFS to search for the goal state."""
 
     def _goal_state(state):
-        return str(state).split(',')[-1] == str(n_target)
+        return str(state).split(',')[-1] == str(target)
 
     # named tuple to keep track of search positions
     search_pos = namedtuple('search_pos', ['cur_state', 'prev_state', 'path'])
 
     # initialize the search problem
-    init_value = [0 for i in range(n_target)] + [0, 0]
+    init_value = [0 for i in range(target)] + [0, 0]
     pos = search_pos(State(init_value), None, '')
     queue = deque([pos])
     explored = set()
@@ -179,7 +179,7 @@ def interactive(init_state, sequence):
     queue = deque(sequence)
     state = init_state
 
-    while(queue):
+    while queue:
         move = queue.popleft()
         state = state.next_states()[move]
 
@@ -188,14 +188,10 @@ def interactive(init_state, sequence):
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        n_target = int(sys.argv[1])
         start = time()
-        res = bfs(n_target)
-        print('Path: {}'.format(res.path))
+        print('Path: {}'.format(bfs(int(sys.argv[1])).path))
         print('Time taken: {}'.format(time() - start))
 
     elif len(sys.argv) == 3:
-        n_target = int(sys.argv[1])
-        seq = sys.argv[2]
-        init_values = [0 for i in range(n_target)] + [0, 0]
-        print(interactive(State(init_values), seq).pretty_print())
+        init_values = [0 for i in range(int(sys.argv[1]))] + [0, 0]
+        print(interactive(State(init_values), sys.argv[2]).pretty_print())
