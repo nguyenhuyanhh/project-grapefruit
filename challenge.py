@@ -150,7 +150,7 @@ def interactive(init_state, sequence):
     state = init_state
     while queue:
         move = queue.popleft()
-        state = state.next_states()[move]
+        state = state.next_states()[0][move]
     return state
 
 
